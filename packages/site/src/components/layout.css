@@ -1,0 +1,29 @@
+html {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	height: 100%;
+}
+
+footer {
+	position: fixed;
+	bottom: 0;
+	height: 60px;
+	width: 100%;
+	font-size: 15px;
+	line-height: 60px;
+	text-align: center;
+	background: #323330;
+	color: white;
+}
+
+footer a {
+	text-decoration: none;
+	color: white;
+}
+
+footer a:hover {
+	color: #fb8075;
+}

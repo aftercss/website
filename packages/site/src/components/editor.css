@@ -1,0 +1,53 @@
+.repl-container {
+	position: absolute;
+	border: 1px solid rgb(190, 189, 189);
+	border-radius: 5px;
+	top: 60px;
+	bottom: 60px;
+	left: 0;
+	right: 0;
+	margin: 5px;
+}
+
+.select-zone {
+	border-radius: 5px;
+	padding: 0 10px;
+	height: 40px;
+	background: #ececec;
+}
+
+.parser, .raw, .location, .time {
+	display: inline-block;
+	margin-right: 20px;
+	line-height: 40px;
+}
+
+.time {
+	float: right;
+}
+
+.time .content {
+	color: #1694f7;
+	font-weight: 700;
+}
+
+.prop {
+	font-weight: 700;
+	margin-right: 5px;
+}
+
+.editor-zone {
+	height: calc(100% - 50px);
+	padding-top: 10px;
+}
+
+#input {
+	margin-right: 1px;
+	border-right: 1px solid grey;
+}
+
+#input, #result {
+	display: inline-block;
+	height: 100%;
+	width: calc(50% - 1px);
+}
