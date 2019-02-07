@@ -1,0 +1,25 @@
+{
+  "name": "@aftercss/site",
+  "version": "0.1.0",
+  "description": "build cli",
+  "main": "lib/index.js",
+  "private": true,
+  "scripts": {
+    "lint:ts": "./../../node_modules/.bin/tslint -c ./../../tslint.json -p tsconfig.json",
+    "lint:ts:fix": "./../../node_modules/.bin/tslint -c ./../../tslint.json --fix -p tsconfig.json",
+    "build": "./../../node_modules/.bin/tsc -p tsconfig.json",
+    "dev": "./../../node_modules/.bin/tsc -p tsconfig.json --watch",
+    "prepublish": "npm run build"
+  },
+  "author": "zoolsher.zl",
+  "license": "ISC",
+  "dependencies": {
+    "@aftercss/site-cli": "^0.1.0",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.2",
+    "@types/react-dom": "^16.8.0"
+  }
+}

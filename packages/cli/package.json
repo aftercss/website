@@ -1,0 +1,26 @@
+{
+  "name": "@aftercss/site-cli",
+  "version": "0.1.0",
+  "description": "build cli",
+  "main": "lib/index.js",
+  "bin": "./bin/after",
+  "private": true,
+  "scripts": {
+    "lint:ts": "./../../node_modules/.bin/tslint -c ./../../tslint.json -p tsconfig.json",
+    "lint:ts:fix": "./../../node_modules/.bin/tslint -c ./../../tslint.json --fix -p tsconfig.json",
+    "build": "./../../node_modules/.bin/tsc -p tsconfig.json",
+    "dev": "./../../node_modules/.bin/tsc -p tsconfig.json --watch",
+    "prepublish": "npm run build"
+  },
+  "author": "zoolsher.zl",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^10.12.21",
+    "commander": "^2.19.0",
+    "webpack": "^4.29.2",
+    "webpack-chain": "^5.2.0"
+  },
+  "devDependencies": {
+    "@types/webpack": "^4.4.24"
+  }
+}
