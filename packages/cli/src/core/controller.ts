@@ -5,5 +5,5 @@ export class CLIController<OptionType> {
   public parseOption(commander: any): OptionType {
     return null;
   }
-  public entry() {}
+  public async entry() {}
 }

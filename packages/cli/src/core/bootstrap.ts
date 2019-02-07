@@ -16,7 +16,10 @@ export function prepareKlass(ControllerKlasses: Array<IControllerKlass<any>>) {
     Commander.action((command, cmd) => {
       const controller = new ControllerKlass();
       controller.option = controller.parseOption(cmd);
-      controller.entry();
+      controller.entry().catch(e => {
+        // tslint:disable-next-line
+        console.error(e);
+      });
     });
   }
 }
