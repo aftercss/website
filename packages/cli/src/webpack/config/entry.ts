@@ -1,12 +1,14 @@
+import { resolve } from 'path';
 import * as ChainConfig from 'webpack-chain';
 import { IBuildConfig } from '../../interface/build-config';
 
 export function webpackConfigEntry(webpackConfig: ChainConfig, buildConfig: IBuildConfig) {
-  for (const item in buildConfig) {
-    if (buildConfig.hasOwnProperty(item)) {
+  const pages = buildConfig.pages;
+  for (const item in pages) {
+    if (pages.hasOwnProperty(item)) {
       webpackConfig
         .entry(item)
-        .add(buildConfig[item].entry)
+        .add(resolve(buildConfig.cwd, pages[item].entry))
         .end();
     }
   }

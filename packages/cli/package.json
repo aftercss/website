@@ -15,8 +15,11 @@
   "author": "zoolsher.zl",
   "license": "ISC",
   "dependencies": {
+    "@types/friendly-errors-webpack-plugin": "^0.1.1",
     "@types/node": "^10.12.21",
     "commander": "^2.19.0",
+    "friendly-errors-webpack-plugin": "^1.7.0",
+    "ts-loader": "^5.3.3",
     "webpack": "^4.29.2",
     "webpack-chain": "^5.2.0"
   },

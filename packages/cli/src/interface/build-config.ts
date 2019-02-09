@@ -1,5 +1,9 @@
 export interface IBuildConfig {
-  [key: string]: {
-    entry: string;
+  cwd: string;
+  pages: {
+    [key: string]: {
+      entry: string;
+    };
   };
+  output: string;
 }

@@ -10,8 +10,10 @@ export interface IControllerKlass<T = any> {
 export function prepareKlass(ControllerKlasses: Array<IControllerKlass<any>>) {
   for (const ControllerKlass of ControllerKlasses) {
     Commander.command(ControllerKlass.command);
-    for (const option of ControllerKlass.options) {
-      (Commander as any).option(...option);
+    if (ControllerKlass.options) {
+      for (const option of ControllerKlass.options) {
+        (Commander as any).option(...option);
+      }
     }
     Commander.action((command, cmd) => {
       const controller = new ControllerKlass();
