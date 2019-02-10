@@ -1,7 +1,7 @@
 {
   "name": "@aftercss/site",
   "version": "0.1.0",
-  "description": "build cli",
+  "description": "site",
   "main": "lib/index.js",
   "private": true,
   "scripts": {

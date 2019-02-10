@@ -9,8 +9,9 @@
       "request": "launch",
       "name": "启动程序",
       "program": "${workspaceFolder}/packages/cli/bin/after",
-      "outFiles": ["${workspaceFolder}/**/*.js"],
-      "args": ["build", "--input=."]
+      "args": ["build"],
+      "cwd": "${workspaceFolder}/packages/site",
+      "console": "integratedTerminal"
     }
   ]
 }
