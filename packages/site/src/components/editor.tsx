@@ -3,7 +3,7 @@ import { Checkbox, Radio } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import * as monaco from 'monaco-editor';
 import * as React from 'react';
-import Worker from 'worker-loader!../js/worker/parser.worker';
+import Worker from '../ts/worker/parser.worker.ts';
 import './editor.css';
 
 export interface IEditorProp {
@@ -21,7 +21,7 @@ export interface IInputData {
   css: string;
   type: 'Aftercss' | 'Postcss';
 }
-export default class Editor extends React.Component<IEditorProp, IEditorState> {
+export class Editor extends React.Component<IEditorProp, IEditorState> {
   private inputEditor: monaco.editor.IStandaloneCodeEditor;
   private resultEditor: monaco.editor.IStandaloneCodeEditor;
   private timer: number;
@@ -136,7 +136,7 @@ export default class Editor extends React.Component<IEditorProp, IEditorState> {
       css: this.inputEditor.getValue(),
       type: this.state.type,
     });
-    worker.onmessage = event => {
+    worker.onmessage = (event: any) => {
       this.setState({
         ast: event.data.res,
         time: event.data.time,

@@ -1,48 +1,56 @@
 import { resolve } from 'path';
-import * as ChainConfig from 'webpack-chain';
 import { IBuildConfig } from '../../interface/build-config';
-import { getLoader4File, getLoader4TypeScript, getOptions4TypeScript } from '../loaders';
-import { getFriendlyErrorPlugin, getOptions4Webpackbar, getWebpackbarPlugin } from '../plugins';
-import { webpackConfigEntry } from './entry';
-import { getWebpackConfig4HtmlPlugin } from './html.plugin';
+import {
+  getLoader4CSS,
+  getLoader4File,
+  getLoader4TypeScript,
+  getLoader4Worker,
+  getOptions4TypeScript,
+} from '../loaders';
+import { getHtmlPlugins, plugins } from '../plugins';
+import { getWebpackConfigEntry } from './entry';
 
 export function buildWebpackConfig(buildConfig: IBuildConfig) {
-  const config = new ChainConfig();
-  /**
-   * 输入输出
-   */
-  webpackConfigEntry(config, buildConfig);
-  config.resolve.extensions
-    .add('.tsx')
-    .add('.ts')
-    .add('.js')
-    .end();
-  config.output.path(resolve(buildConfig.cwd, buildConfig.output)).filename('[name].js');
-  /**
-   * loader 配置
-   */
-  config.module
-    .rule('tsx')
-    .test(/\.tsx$/)
-    .use('typescript')
-    .loader(getLoader4TypeScript())
-    .options(getOptions4TypeScript());
-
-  config.module
-    .rule('file')
-    .test(/\.(png|jpg|gif)$/)
-    .use('file')
-    .loader(getLoader4File());
-
-  config
-    .plugin('friendly-error')
-    .use(getFriendlyErrorPlugin())
-    .end()
-    .plugin('webpackbar')
-    .use(getWebpackbarPlugin(), [getOptions4Webpackbar()]);
-
-  const json = config.toConfig();
-  json.mode = 'none';
-  getWebpackConfig4HtmlPlugin(json, buildConfig);
-  return json;
+  return {
+    entry: getWebpackConfigEntry(buildConfig),
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          use: getLoader4CSS(),
+        },
+        {
+          test: /\.tsx$/,
+          use: [
+            {
+              loader: getLoader4TypeScript(),
+              options: getOptions4TypeScript(),
+            },
+          ],
+        },
+        {
+          test: /\.worker\.ts$/,
+          use: {
+            loader: getLoader4Worker(),
+          },
+        },
+        {
+          test: /\.(png|jp(e)g|gif)$/,
+          use: [
+            {
+              loader: getLoader4File(),
+            },
+          ],
+        },
+      ],
+    },
+    output: {
+      filename: '[name].js',
+      path: resolve(buildConfig.cwd, buildConfig.output),
+    },
+    plugins: plugins.concat(getHtmlPlugins(buildConfig)),
+    resolve: {
+      extensions: ['.tsx', '.ts', '.js', '.json'],
+    },
+  };
 }

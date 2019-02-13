@@ -1,10 +1,8 @@
-import HtmlWebpackPlugin = require('html-webpack-plugin');
+import * as htmlWebpackPlugin from 'html-webpack-plugin';
+import { IBuildConfig } from '../../interface/build-config';
 import { templateMaker } from '../../shared';
-export function getHtmlPlugin() {
-  return HtmlWebpackPlugin;
-}
 
-export function getConfig4HtmlPlugin(chuck: string): HtmlWebpackPlugin.Options {
+export function getConfig4HtmlPlugin(chuck: string): htmlWebpackPlugin.Options {
   return {
     chunks: [chuck],
     filename: chuck + '.html',
@@ -24,3 +22,15 @@ const htmlTemplate = templateMaker`
   </body>
 </html>
 `;
+
+export function getHtmlPlugins(buildConfig: IBuildConfig): any {
+  const pages = buildConfig.pages;
+  const htmlPlugins = [];
+  for (const page in pages) {
+    if (pages.hasOwnProperty(page)) {
+      const pageHtmlPlugin = new htmlWebpackPlugin(getConfig4HtmlPlugin(page));
+      htmlPlugins.push(pageHtmlPlugin);
+    }
+  }
+  return htmlPlugins;
+}

@@ -2,7 +2,7 @@ import * as React from 'react';
 import icon from '../images/header.png';
 import './header.css';
 
-export default class Header extends React.Component {
+export class Header extends React.Component {
   public render() {
     return (
       <header>

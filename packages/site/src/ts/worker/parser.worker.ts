@@ -33,3 +33,5 @@ ctx.addEventListener('message', event => {
   });
   ctx.terminate();
 });
+
+export default ctx;

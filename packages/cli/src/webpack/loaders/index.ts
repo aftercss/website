@@ -1,6 +1,4 @@
-import * as webpack from 'webpack';
+export * from './css';
 export * from './file';
 export * from './typescript';
-export function getWebpackInstance() {
-  return webpack;
-}
+export * from './worker';

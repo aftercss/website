@@ -1,6 +1,12 @@
 module.exports = {
-  pages: {
-    index: { entry: './src/index.tsx' },
+  webpack: {
+    pages: {
+      index: { entry: './src/index.tsx' },
+    },
+    output: './dist',
   },
-  output: './dist',
+  deploy: {
+    repo: '',
+    branch: 'gh-pages',
+  },
 };

@@ -1,5 +1,10 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Header } from './components';
+import { Editor, Layout } from './components';
 
-ReactDOM.render(<Header p="test-props-works-fine" />, document.querySelector('#root'));
+ReactDOM.render(
+  <Layout>
+    <Editor language="css" />
+  </Layout>,
+  document.querySelector('#root'),
+);

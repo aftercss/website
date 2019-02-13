@@ -14,9 +14,9 @@
   "author": "zoolsher.zl",
   "license": "ISC",
   "dependencies": {
-		"@aftercss/site-cli": "^0.1.0",
     "@aftercss/parser": "^0.1.7",
     "@aftercss/shared": "^0.1.7",
+    "@aftercss/site-cli": "^0.1.0",
     "@aftercss/tokenizer": "^0.1.7",
     "antd": "^3.13.2",
     "monaco-editor": "^0.15.6",
@@ -26,7 +26,6 @@
   },
   "devDependencies": {
     "@types/react": "^16.8.2",
-    "@types/react-dom": "^16.8.0",
-    "worker-loader": "^2.0.0"
+    "@types/react-dom": "^16.8.0"
   }
 }

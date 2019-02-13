@@ -42,7 +42,7 @@ export class BuildController extends CLIController<IBuildOptionType> {
        * TODO： 之后解决一下ES6的问题
        * TODO: 配置简化 缩写 部分默认配置等 拓展等
        */
-      return { ...require(configFilePath), ...{ cwd: this.option.cwd } };
+      return { ...require(configFilePath).webpack, ...{ cwd: this.option.cwd } };
     } else {
       return { ...UserDefinedConfigDefaultValue, ...{ cwd: this.option.cwd } };
     }

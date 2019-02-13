@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-import Header from './header';
+import { Header } from './header';
 import './layout.css';
 
-export default class Layout extends React.Component {
+export class Layout extends React.Component {
   public render() {
     return (
       <div>
