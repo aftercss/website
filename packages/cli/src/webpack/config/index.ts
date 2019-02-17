@@ -1,4 +1,5 @@
 import { resolve } from 'path';
+import webpack = require('webpack');
 import { IBuildConfig } from '../../interface/build-config';
 import {
   getLoader4CSS,
@@ -6,13 +7,23 @@ import {
   getLoader4TypeScript,
   getLoader4Worker,
   getOptions4TypeScript,
+  getOptions4Worker,
 } from '../loaders';
 import { getHtmlPlugins, plugins } from '../plugins';
 import { getWebpackConfigEntry } from './entry';
 
 export function buildWebpackConfig(buildConfig: IBuildConfig) {
-  return {
+  const config: webpack.Configuration = {
     entry: getWebpackConfigEntry(buildConfig),
+    externals: {
+      'monaco-editor': {
+        root: 'Monaco',
+      },
+      'source-map': {
+        root: 'SourceMap',
+      },
+    },
+    mode: 'none',
     module: {
       rules: [
         {
@@ -30,9 +41,16 @@ export function buildWebpackConfig(buildConfig: IBuildConfig) {
         },
         {
           test: /\.worker\.ts$/,
-          use: {
-            loader: getLoader4Worker(),
-          },
+          use: [
+            {
+              loader: getLoader4Worker(),
+              options: getOptions4Worker(),
+            },
+            {
+              loader: getLoader4TypeScript(),
+              options: getOptions4TypeScript(),
+            },
+          ],
         },
         {
           test: /\.(png|jp(e)g|gif)$/,
@@ -53,4 +71,5 @@ export function buildWebpackConfig(buildConfig: IBuildConfig) {
       extensions: ['.tsx', '.ts', '.js', '.json'],
     },
   };
+  return config;
 }
