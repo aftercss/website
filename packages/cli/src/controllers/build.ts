@@ -16,6 +16,7 @@ export interface IBuildOptionType {
 export const UserDefinedConfigPath: string = './.after.config.js';
 
 export const UserDefinedConfigDefaultValue = {
+  alias: {},
   output: './dist',
   pages: {
     index: {

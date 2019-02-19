@@ -68,8 +68,13 @@ export function buildWebpackConfig(buildConfig: IBuildConfig) {
     },
     plugins: plugins.concat(getHtmlPlugins(buildConfig)),
     resolve: {
+      alias: {
+        // TODO: 把 webpack config 弄出去让人 merge 一下吧这样下去会死。
+        ...buildConfig.alias,
+      },
       extensions: ['.tsx', '.ts', '.js', '.json'],
     },
   };
+
   return config;
 }

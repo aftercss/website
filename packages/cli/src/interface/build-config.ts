@@ -5,5 +5,6 @@ export interface IBuildConfig {
       entry: string;
     };
   };
+  alias: Record<string, string>;
   output: string;
 }
