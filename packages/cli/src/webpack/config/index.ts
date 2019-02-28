@@ -1,15 +1,8 @@
 import { resolve } from 'path';
 import webpack = require('webpack');
 import { IBuildConfig } from '../../interface/build-config';
-import {
-  getLoader4CSS,
-  getLoader4File,
-  getLoader4TypeScript,
-  getLoader4Worker,
-  getOptions4TypeScript,
-  getOptions4Worker,
-} from '../loaders';
-import { getHtmlPlugins, plugins } from '../plugins';
+import { getLoader4CSS, getLoader4File, getLoader4TypeScript, getOptions4TypeScript } from '../loaders';
+import { getHtmlPlugins, getUglifyJsPlugin, plugins } from '../plugins';
 import { getWebpackConfigEntry } from './entry';
 
 export function buildWebpackConfig(buildConfig: IBuildConfig) {
@@ -40,19 +33,6 @@ export function buildWebpackConfig(buildConfig: IBuildConfig) {
           ],
         },
         {
-          test: /\.worker\.ts$/,
-          use: [
-            {
-              loader: getLoader4Worker(),
-              options: getOptions4Worker(),
-            },
-            {
-              loader: getLoader4TypeScript(),
-              options: getOptions4TypeScript(),
-            },
-          ],
-        },
-        {
           test: /\.(png|jp(e)g|gif)$/,
           use: [
             {
@@ -62,10 +42,14 @@ export function buildWebpackConfig(buildConfig: IBuildConfig) {
         },
       ],
     },
+    optimization: {
+      minimizer: [getUglifyJsPlugin()],
+    },
     output: {
       filename: '[name].js',
       path: resolve(buildConfig.cwd, buildConfig.output),
     },
+
     plugins: plugins.concat(getHtmlPlugins(buildConfig)),
     resolve: {
       alias: {

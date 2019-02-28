@@ -22,7 +22,8 @@
     "monaco-editor": "^0.15.6",
     "postcss": "^7.0.14",
     "react": "^16.8.1",
-    "react-dom": "^16.8.1"
+    "react-dom": "^16.8.1",
+    "typed-web-workers": "^2.1.1"
   },
   "devDependencies": {
     "@types/react": "^16.8.2",

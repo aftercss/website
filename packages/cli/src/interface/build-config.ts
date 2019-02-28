@@ -7,4 +7,5 @@ export interface IBuildConfig {
   };
   alias: Record<string, string>;
   output: string;
+  toInject: string;
 }

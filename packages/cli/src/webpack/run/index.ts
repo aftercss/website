@@ -3,10 +3,10 @@ import webpack = require('webpack');
 export function runWebpack(config: webpack.Configuration) {
   const instance = webpack(config);
   instance.run((err, stats) => {
-    // console.log(
-    //   stats.toString({
-    //     colors: true,
-    //   }),
-    // );
+    console.log(
+      stats.toString({
+        colors: true,
+      }),
+    );
   });
 }
