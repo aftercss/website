@@ -23,7 +23,7 @@
     "ts-loader": "^5.3.3",
     "webpack": "^4.29.2",
     "webpack-chain": "^5.2.0",
-		"webpackbar": "^3.1.5",
+    "webpackbar": "^3.1.5",
     "uglifyjs-webpack-plugin": "^2.1.2"
   },
   "devDependencies": {

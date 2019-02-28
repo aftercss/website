@@ -8,8 +8,7 @@
     "lint:ts": "lerna run lint:ts",
     "lint:ts:fix": "lerna run lint:ts:fix",
     "lint:prettier": "prettier --list-different './packages/{cli, site}/src/**/*.ts' '*.json'",
-    "lint:prettier:fix": "prettier --write './packages/{cli, site}/src/**/*.ts' '*.json' ",
-    "prepublish": "npm run build"
+    "lint:prettier:fix": "prettier --write './packages/{cli, site}/src/**/*.ts' '*.json' "
   },
   "devDependencies": {
     "cz-conventional-changelog": "2.1.0",
