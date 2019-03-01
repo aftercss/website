@@ -29,7 +29,7 @@ export function getHtmlPlugins(buildConfig: IBuildConfig): any {
   const htmlPlugins = [];
   for (const page in pages) {
     if (pages.hasOwnProperty(page)) {
-      const pageHtmlPlugin = new htmlWebpackPlugin(getConfig4HtmlPlugin(page, buildConfig.toInject));
+      const pageHtmlPlugin = new htmlWebpackPlugin(getConfig4HtmlPlugin(page, 'TODO'));
       htmlPlugins.push(pageHtmlPlugin);
     }
   }
