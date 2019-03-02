@@ -2,6 +2,7 @@ module.exports = {
   webpack: {
     pages: {
       index: { entry: './src/index.tsx' },
+      second: { entry: './src/second.ts' },
     },
     output: './dist',
     alias: {

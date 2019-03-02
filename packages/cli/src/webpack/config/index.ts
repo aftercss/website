@@ -2,7 +2,7 @@ import { resolve } from 'path';
 import webpack = require('webpack');
 import { IBuildConfig } from '../../interface/build-config';
 import { getLoader4CSS, getLoader4File, getLoader4TypeScript, getOptions4TypeScript } from '../loaders';
-import { getHtmlPlugins, getUglifyJsPlugin, plugins } from '../plugins';
+import { getHtmlPlugins, getOutputManagerPlugin, getUglifyJsPlugin, plugins } from '../plugins';
 import { getWebpackConfigEntry } from './entry';
 
 export function buildWebpackConfig(buildConfig: IBuildConfig) {
@@ -39,10 +39,10 @@ export function buildWebpackConfig(buildConfig: IBuildConfig) {
     },
     output: {
       filename: '[name].js',
-      libraryTarget: "window",
+      libraryTarget: 'window',
       path: resolve(buildConfig.cwd, buildConfig.output),
     },
-    plugins: plugins.concat(getHtmlPlugins(buildConfig)),
+    plugins: plugins.concat(getHtmlPlugins(buildConfig)).concat(getOutputManagerPlugin(buildConfig)),
     resolve: {
       alias: {
         // TODO: 把 webpack config 弄出去让人 merge 一下吧这样下去会死。
