@@ -8,14 +8,6 @@ import { getWebpackConfigEntry } from './entry';
 export function buildWebpackConfig(buildConfig: IBuildConfig) {
   const config: webpack.Configuration = {
     entry: getWebpackConfigEntry(buildConfig),
-    externals: {
-      'monaco-editor': {
-        root: 'Monaco',
-      },
-      'source-map': {
-        root: 'SourceMap',
-      },
-    },
     mode: 'none',
     module: {
       rules: [
@@ -47,9 +39,9 @@ export function buildWebpackConfig(buildConfig: IBuildConfig) {
     },
     output: {
       filename: '[name].js',
+      libraryTarget: "window",
       path: resolve(buildConfig.cwd, buildConfig.output),
     },
-
     plugins: plugins.concat(getHtmlPlugins(buildConfig)),
     resolve: {
       alias: {

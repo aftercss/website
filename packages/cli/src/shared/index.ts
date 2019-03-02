@@ -10,3 +10,9 @@ export function templateMaker<T extends string>(templates: TemplateStringsArray,
     return res;
   };
 }
+
+export type IConstructor<T> = new (...args: any[]) => T;
+
+export function isString(s: any): s is string {
+  return Object.prototype.toString.call(s) === '[object String]';
+}
