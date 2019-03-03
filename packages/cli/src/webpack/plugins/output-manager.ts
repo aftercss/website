@@ -1,21 +1,39 @@
 import webpack = require('webpack');
+import { PageManager } from '../../page-manager';
+import { AfterSitePlugin } from '../../plugin/plugin';
 
 export class OutputManagerPlugin implements webpack.Plugin {
   public entryName: string;
-  public constructor(entryName: string) {
+  public plugins: AfterSitePlugin[] = [];
+  public constructor(entryName: string, plugins: AfterSitePlugin[]) {
     if (entryName === null || entryName === undefined || entryName === '') {
-      throw new Error('require a entry name');
+      throw new Error('OutputManager require a entry name');
     }
     this.entryName = entryName;
+    this.plugins = plugins;
   }
   public apply(compiler: webpack.Compiler) {
-    compiler.hooks.afterCompile.tap('OutPutManagerPlugin', compilation => {
-      const chunkGroup = compilation.namedChunkGroups.get(this.entryName);
-      debugger;
+    compiler.hooks.afterCompile.tapAsync('OutPutManagerPlugin', async compilation => {
+      const chunkGroup = compilation.namedChunks.get(this.entryName);
       if (!chunkGroup) {
         return;
       }
-      debugger;
+      const pageManger = new PageManager();
+      if (this.plugins) {
+        for (const plugin of this.plugins) {
+          await plugin.phaseHtmlEntry(pageManger, chunkGroup);
+        }
+      }
+      // await plugin.phaseHTMLContent;
+      const htmlContent = pageManger.toString();
+      compilation.assets[this.entryName + '.html'] = {
+        source() {
+          return htmlContent;
+        },
+        size() {
+          return htmlContent.length;
+        },
+      };
     });
   }
 }

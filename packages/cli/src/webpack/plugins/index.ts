@@ -1,6 +1,8 @@
+import Friendly = require('friendly-errors-webpack-plugin');
 import * as UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import * as webpackbar from 'webpackbar';
 import { IBuildConfig } from '../../interface/build-config';
+import { AfterSitePlugin } from '../../plugin/plugin';
 import { OutputManagerPlugin } from './output-manager';
 
 export const plugins: any = [
@@ -17,11 +19,11 @@ export function getUglifyJsPlugin() {
   });
 }
 
-export function getOutputManagerPlugin(buildConfig: IBuildConfig) {
+export function getOutputManagerPlugin(buildConfig: IBuildConfig, afterSitePlugins: AfterSitePlugin[]) {
   const pages = Object.keys(buildConfig.pages);
   const outputPlugins = [];
   for (const page of pages) {
-    outputPlugins.push(new OutputManagerPlugin(page));
+    outputPlugins.push(new OutputManagerPlugin(page, afterSitePlugins));
   }
   return outputPlugins;
 }

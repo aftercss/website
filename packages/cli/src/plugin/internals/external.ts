@@ -30,8 +30,8 @@ export class ExternalPlugin extends AfterSitePlugin<IExternalOptions> {
       externals: externalOptions,
     });
   }
-  public async phaseHtmlEntry(pageManager: PageManager) {
-    super.phaseHtmlEntry(pageManager);
+  public async phaseHtmlEntry(pageManager: PageManager, chunkGroup: any) {
+    super.phaseHtmlEntry(pageManager, chunkGroup);
     /**
      * 现在会把所有的东西，之后要区分一下依赖，只送必要的
      */
@@ -47,5 +47,8 @@ export class ExternalPlugin extends AfterSitePlugin<IExternalOptions> {
         }
       }
     }
+  }
+  public isModuleInChunk(): boolean {
+    return true;
   }
 }

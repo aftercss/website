@@ -13,5 +13,5 @@ export class AfterSitePlugin<T extends any = any> {
   ): Promise<webpack.Configuration> {
     return webpackConfig;
   }
-  public async phaseHtmlEntry(pageManger: PageManager) {}
+  public async phaseHtmlEntry(pageManger: PageManager, complication: any) {}
 }

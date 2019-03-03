@@ -42,7 +42,7 @@ export class BuildController extends CLIController<IBuildOptionType> {
   public async entry() {
     const buildConfig = await this.loadUserConfigWithDefaultValue();
     this.registerPlugins(buildConfig);
-    const webpackConfig = buildWebpackConfig(buildConfig);
+    const webpackConfig = buildWebpackConfig(buildConfig, this.plugins);
     runWebpack(await this.pluginHandleWebpackConfig(webpackConfig));
   }
   /**
