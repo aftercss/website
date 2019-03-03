@@ -1,5 +1,5 @@
 import { resolve } from 'path';
-import { IBuildConfig } from '../../interface/build-config';
+import { ICommonConfig as IBuildConfig } from '../../interface/common-config';
 export interface IEntry {
   [index: string]: string;
 }

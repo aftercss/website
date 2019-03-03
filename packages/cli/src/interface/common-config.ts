@@ -1,4 +1,4 @@
-export interface IBuildConfig {
+export interface ICommonConfig {
   cwd: string;
   pages: {
     [key: string]: {

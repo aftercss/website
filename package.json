@@ -22,5 +22,12 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  }
+  },
+  "dependencies": {
+    "pre-commit": "^1.2.2"
+  },
+  "pre-commit": [
+    "lint",
+    "build"
+  ]
 }
