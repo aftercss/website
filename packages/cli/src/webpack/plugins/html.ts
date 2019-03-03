@@ -1,5 +1,5 @@
 import * as htmlWebpackPlugin from 'html-webpack-plugin';
-import { IBuildConfig } from '../../interface/build-config';
+import { ICommonConfig as IBuildConfig } from '../../interface/common-config';
 import { templateMaker } from '../../shared';
 
 export function getConfig4HtmlPlugin(chuck: string, toInject: string = ''): htmlWebpackPlugin.Options {

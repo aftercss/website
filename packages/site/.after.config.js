@@ -10,9 +10,15 @@ module.exports = {
     },
     plugin: {
       external: {
+        antd: {
+          name: 'antd',
+        },
         react: {
-          name: 'react',
+          name: 'React',
           script: ['https://react.js'],
+        },
+        'react-dom': {
+          name: 'ReactDom',
         },
         'monaco-editor': {
           name: 'Monaco',
@@ -34,5 +40,11 @@ module.exports = {
   deploy: {
     repo: '',
     branch: 'gh-pages',
+  },
+  devSer: {
+    compress: true,
+    hot: true,
+    open: true,
+    port: 8080,
   },
 };

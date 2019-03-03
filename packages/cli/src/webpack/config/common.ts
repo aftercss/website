@@ -1,14 +1,13 @@
 import { resolve } from 'path';
 import webpack = require('webpack');
-import { IBuildConfig } from '../../interface/build-config';
+import { ICommonConfig } from '../../interface/common-config';
 import { getLoader4CSS, getLoader4File, getLoader4TypeScript, getOptions4TypeScript } from '../loaders';
-import { getHtmlPlugins, getOutputManagerPlugin, getUglifyJsPlugin, plugins } from '../plugins';
+import { getHtmlPlugins, getOutputManagerPlugin, plugins } from '../plugins';
 import { getWebpackConfigEntry } from './entry';
 
-export function buildWebpackConfig(buildConfig: IBuildConfig) {
+export function commonWebpackConfig(buildConfig: ICommonConfig) {
   const config: webpack.Configuration = {
     entry: getWebpackConfigEntry(buildConfig),
-    mode: 'none',
     module: {
       rules: [
         {
@@ -33,9 +32,6 @@ export function buildWebpackConfig(buildConfig: IBuildConfig) {
           ],
         },
       ],
-    },
-    optimization: {
-      minimizer: [getUglifyJsPlugin()],
     },
     output: {
       filename: '[name].js',

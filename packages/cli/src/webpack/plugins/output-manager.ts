@@ -11,11 +11,9 @@ export class OutputManagerPlugin implements webpack.Plugin {
   public apply(compiler: webpack.Compiler) {
     compiler.hooks.afterCompile.tap('OutPutManagerPlugin', compilation => {
       const chunkGroup = compilation.namedChunkGroups.get(this.entryName);
-      debugger;
       if (!chunkGroup) {
         return;
       }
-      debugger;
     });
   }
 }

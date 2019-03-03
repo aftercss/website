@@ -1,6 +1,8 @@
 import * as UglifyJsPlugin from 'uglifyjs-webpack-plugin';
+import * as webpack from 'webpack';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import * as webpackbar from 'webpackbar';
-import { IBuildConfig } from '../../interface/build-config';
+import { ICommonConfig as IBuildConfig } from '../../interface/common-config';
 import { OutputManagerPlugin } from './output-manager';
 
 export const plugins: any = [
@@ -9,13 +11,20 @@ export const plugins: any = [
   }),
 ];
 
-export { getHtmlPlugins } from './html';
+export function getBuildPlugins() {
+  return [new BundleAnalyzerPlugin()];
+}
 
+export function getDevPlugins() {
+  return [new webpack.HotModuleReplacementPlugin()];
+}
 export function getUglifyJsPlugin() {
   return new UglifyJsPlugin({
     test: /\.js(\?.*)?$/i,
   });
 }
+
+export { getHtmlPlugins } from './html';
 
 export function getOutputManagerPlugin(buildConfig: IBuildConfig) {
   const pages = Object.keys(buildConfig.pages);
