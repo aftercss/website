@@ -18,7 +18,7 @@ export class DevController extends CommonController {
   public async entry() {
     const devConfig = await this.loadUserConfigWithDefaultValue();
     this.registerPlugins(devConfig);
-    const webpackConfig = devWebpackConfig(devConfig);
+    const webpackConfig = devWebpackConfig(devConfig, this.plugins);
     const devSerConfig = await this.loadWebpackDevConfigWithDefaultValue();
     runWebpack(webpackConfig, devSerConfig);
   }

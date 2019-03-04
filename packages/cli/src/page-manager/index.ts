@@ -31,9 +31,9 @@ export class PageManager {
     ${this.styles
       .map(style => {
         if (isString(style)) {
-          return `<link rel="stylesheet" href="${style}"/>`;
+          return `<link rel="stylesheet" href="${style}">`;
         } else {
-          return `<link rel="stylesheet" href="${style.src}"/>`;
+          return `<link rel="stylesheet" href="${style.src}">`;
         }
       })
       .join('\r\n')}
@@ -43,9 +43,9 @@ export class PageManager {
     ${this.scripts
       .map(script => {
         if (isString(script)) {
-          return `<script src="${script}"/>`;
+          return `<script src="${script}"></script>`;
         } else {
-          return `<script src="${script.src}"/>`;
+          return `<script src="${script.src}"></script>`;
         }
       })
       .join('\r\n')}

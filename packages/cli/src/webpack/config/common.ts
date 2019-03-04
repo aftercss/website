@@ -1,15 +1,14 @@
 import { resolve } from 'path';
 import webpack = require('webpack');
-import { IBuildConfig } from '../../interface/build-config';
-import { AfterSitePlugin } from '../../plugin/plugin';
 import { ICommonConfig } from '../../interface/common-config';
+import { AfterSitePlugin } from '../../plugin/plugin';
 import { getLoader4CSS, getLoader4File, getLoader4TypeScript, getOptions4TypeScript } from '../loaders';
-import { getHtmlPlugins, getOutputManagerPlugin, plugins } from '../plugins';
+import { getOutputManagerPlugin, plugins } from '../plugins';
 import { getWebpackConfigEntry } from './entry';
 
-export function commonWebpackConfig(buildConfig: ICommonConfig, afterSitePlugins: AfterSitePlugin[]) {
+export function commonWebpackConfig(commonConfig: ICommonConfig, afterSitePlugins: AfterSitePlugin[]) {
   const config: webpack.Configuration = {
-    entry: getWebpackConfigEntry(buildConfig),
+    entry: getWebpackConfigEntry(commonConfig),
     module: {
       rules: [
         {
@@ -38,13 +37,13 @@ export function commonWebpackConfig(buildConfig: ICommonConfig, afterSitePlugins
     output: {
       filename: '[name].js',
       libraryTarget: 'window',
-      path: resolve(buildConfig.cwd, buildConfig.output),
+      path: resolve(commonConfig.cwd, commonConfig.output),
     },
-    plugins: plugins.concat(getHtmlPlugins(buildConfig)).concat(getOutputManagerPlugin(buildConfig, afterSitePlugins)),
+    plugins: plugins.concat(getOutputManagerPlugin(commonConfig, afterSitePlugins)),
     resolve: {
       alias: {
         // TODO: 把 webpack config 弄出去让人 merge 一下吧这样下去会死。
-        ...buildConfig.alias,
+        ...commonConfig.alias,
       },
       extensions: ['.tsx', '.ts', '.js', '.json'],
     },

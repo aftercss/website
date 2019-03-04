@@ -37,12 +37,20 @@ export class ExternalPlugin extends AfterSitePlugin<IExternalOptions> {
      */
     for (const externalItem in this.rawOptions) {
       if (this.rawOptions.hasOwnProperty(externalItem)) {
-        const s = this.rawOptions[externalItem].script;
-        if (isString(s)) {
-          pageManager.scripts.push(s);
+        const scripts = this.rawOptions[externalItem].script || [];
+        if (isString(scripts)) {
+          pageManager.scripts.push(scripts);
         } else {
-          s.forEach(src => {
+          scripts.forEach(src => {
             pageManager.scripts.push(src);
+          });
+				}
+        const styles = this.rawOptions[externalItem].style || [];
+        if (isString(styles)) {
+          pageManager.styles.push(styles);
+        } else {
+          styles.forEach(src => {
+            pageManager.styles.push(src);
           });
         }
       }

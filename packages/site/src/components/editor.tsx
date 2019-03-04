@@ -1,7 +1,7 @@
 import { Checkbox, Radio } from 'antd';
 /* tslint:disable */
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
-import * as monaco from 'monaco-editor';
+import * as Monaco from 'monaco-editor';
 import * as React from 'react';
 import { createWorker, ITypedWorker } from 'typed-web-workers';
 /* tslint:disable */
@@ -39,8 +39,8 @@ export interface IInputData {
   type: 'Aftercss' | 'Postcss';
 }
 export class Editor extends React.Component<IEditorProp, IEditorState> {
-  private inputEditor: monaco.editor.IStandaloneCodeEditor;
-  private resultEditor: monaco.editor.IStandaloneCodeEditor;
+  private inputEditor: Monaco.editor.IStandaloneCodeEditor;
+  private resultEditor: Monaco.editor.IStandaloneCodeEditor;
   private timer: number;
   constructor(props: IEditorProp) {
     super(props);
@@ -87,11 +87,11 @@ export class Editor extends React.Component<IEditorProp, IEditorState> {
     );
   }
   public componentDidMount() {
-    this.inputEditor = monaco.editor.create(document.getElementById('input'), {
+    this.inputEditor = Monaco.editor.create(document.getElementById('input'), {
       language: this.props.language,
       value: '/* input css content*/',
     });
-    this.resultEditor = monaco.editor.create(document.getElementById('result'), {
+    this.resultEditor = Monaco.editor.create(document.getElementById('result'), {
       language: 'json',
       value: '{}',
     });

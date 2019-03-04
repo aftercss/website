@@ -13,27 +13,31 @@ export class OutputManagerPlugin implements webpack.Plugin {
     this.plugins = plugins;
   }
   public apply(compiler: webpack.Compiler) {
-    compiler.hooks.afterCompile.tapAsync('OutPutManagerPlugin', async compilation => {
-      const chunkGroup = compilation.namedChunks.get(this.entryName);
-      if (!chunkGroup) {
-        return;
-      }
-      const pageManger = new PageManager();
-      if (this.plugins) {
-        for (const plugin of this.plugins) {
-          await plugin.phaseHtmlEntry(pageManger, chunkGroup);
+    compiler.hooks.afterCompile.tapPromise('OutPutManagerPlugin', compilation => {
+      return new Promise(async (resolve, reject) => {
+        const chunkGroup = compilation.namedChunks.get(this.entryName);
+        if (!chunkGroup) {
+          return;
         }
-      }
-      // await plugin.phaseHTMLContent;
-      const htmlContent = pageManger.toString();
-      compilation.assets[this.entryName + '.html'] = {
-        source() {
-          return htmlContent;
-        },
-        size() {
-          return htmlContent.length;
-        },
-      };
+        const pageManager = new PageManager();
+        pageManager.title = this.entryName;
+        if (this.plugins) {
+          for (const plugin of this.plugins) {
+            await plugin.phaseHtmlEntry(pageManager, chunkGroup);
+          }
+        }
+        pageManager.scripts.push(`${this.entryName}.js`);
+        const htmlContent = pageManager.toString();
+        compilation.assets[this.entryName + '.html'] = {
+          source() {
+            return htmlContent;
+          },
+          size() {
+            return htmlContent.length;
+          },
+        };
+        resolve();
+      });
     });
   }
 }
