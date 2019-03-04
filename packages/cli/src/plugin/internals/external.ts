@@ -44,7 +44,7 @@ export class ExternalPlugin extends AfterSitePlugin<IExternalOptions> {
           scripts.forEach(src => {
             pageManager.scripts.push(src);
           });
-				}
+        }
         const styles = this.rawOptions[externalItem].style || [];
         if (isString(styles)) {
           pageManager.styles.push(styles);
