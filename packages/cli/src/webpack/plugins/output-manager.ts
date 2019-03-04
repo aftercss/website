@@ -25,7 +25,11 @@ export class OutputManagerPlugin implements webpack.Plugin {
           await plugin.phaseHtmlEntry(pageManager, chunkGroup);
         }
       }
-      pageManager.scripts.push(`${this.entryName}.js`);
+      pageManager.scripts = pageManager.scripts.concat(
+        chunkGroup.files.filter((file: string) => {
+          return !file.match(/\.map$/);
+        }),
+      );
       const htmlContent = pageManager.toString();
       compilation.assets[this.entryName + '.html'] = {
         source() {

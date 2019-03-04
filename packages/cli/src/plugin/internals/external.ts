@@ -37,6 +37,9 @@ export class ExternalPlugin extends AfterSitePlugin<IExternalOptions> {
      */
     for (const externalItem in this.rawOptions) {
       if (this.rawOptions.hasOwnProperty(externalItem)) {
+        if (!this.isModuleInChunk(externalItem, chunkGroup)) {
+          continue;
+        }
         const scripts = this.rawOptions[externalItem].script || [];
         if (isString(scripts)) {
           pageManager.scripts.push(scripts);
@@ -56,7 +59,12 @@ export class ExternalPlugin extends AfterSitePlugin<IExternalOptions> {
       }
     }
   }
-  public isModuleInChunk(): boolean {
-    return true;
+  public isModuleInChunk(externalItem: string, chuckGroup: any): boolean {
+    for (const moduleItem of chuckGroup.modulesIterable) {
+      if (moduleItem.external && moduleItem.userRequest === externalItem) {
+        return true;
+      }
+    }
+    return false;
   }
 }
