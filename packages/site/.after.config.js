@@ -1,7 +1,7 @@
 module.exports = {
   webpack: {
     pages: {
-      index: { entry: './src/index.tsx' },
+      index: { entry: './src/index.tsx', title: 'spades' },
       second: { entry: './src/second.ts' },
     },
     output: './dist',
@@ -42,8 +42,11 @@ module.exports = {
     },
   },
   deploy: {
-    repo: '',
-    branch: 'gh-pages',
+    branch: 'test',
+    dist: 'dist',
+    repo: 'website.git',
+    type: 'project',
+    username: 'aftercss',
   },
   devSer: {
     compress: true,

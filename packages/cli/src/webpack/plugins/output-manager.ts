@@ -5,12 +5,14 @@ import { AfterSitePlugin } from '../../plugin/plugin';
 export class OutputManagerPlugin implements webpack.Plugin {
   public entryName: string;
   public plugins: AfterSitePlugin[] = [];
-  public constructor(entryName: string, plugins: AfterSitePlugin[]) {
+  public title: string;
+  public constructor(entryName: string, plugins: AfterSitePlugin[], title?: string) {
     if (entryName === null || entryName === undefined || entryName === '') {
       throw new Error('OutputManager require a entry name');
     }
     this.entryName = entryName;
     this.plugins = plugins;
+    this.title = title;
   }
   public apply(compiler: webpack.Compiler) {
     compiler.hooks.afterCompile.tapPromise('OutPutManagerPlugin', async compilation => {
@@ -19,7 +21,7 @@ export class OutputManagerPlugin implements webpack.Plugin {
         return;
       }
       const pageManager = new PageManager();
-      pageManager.title = this.entryName;
+      pageManager.title = this.title || this.entryName;
       if (this.plugins) {
         for (const plugin of this.plugins) {
           await plugin.phaseHtmlEntry(pageManager, chunkGroup);

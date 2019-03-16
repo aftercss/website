@@ -172,15 +172,15 @@ export class Editor extends React.Component<IEditorProp, IEditorState> {
       out.time = performance.now() - start;
       callback(out);
     }
+    const typedWorker: ITypedWorker<IWorkerInput, IWorkerOuput> = createWorker(workFn, updateState);
     const self = this;
     function updateState(out: IWorkerOuput) {
+      typedWorker.terminate();
       self.setState({
         ast: out.res,
         time: out.time,
       });
     }
-
-    const typedWorker: ITypedWorker<IWorkerInput, IWorkerOuput> = createWorker(workFn, updateState);
     typedWorker.postMessage({
       css: this.inputEditor.getValue(),
       type: this.state.type,

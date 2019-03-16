@@ -1,5 +1,7 @@
 export interface IDeployConfig {
   branch: string;
-  output: string;
+  dist: string;
   repo: string;
+  type: 'project' | 'user';
+  username: string;
 }

@@ -26,10 +26,9 @@ export function getUglifyJsPlugin() {
 }
 
 export function getOutputManagerPlugin(buildConfig: IBuildConfig, afterSitePlugins: AfterSitePlugin[]) {
-  const pages = Object.keys(buildConfig.pages);
   const outputPlugins = [];
-  for (const page of pages) {
-    outputPlugins.push(new OutputManagerPlugin(page, afterSitePlugins));
+  for (const [page, { title }] of Object.entries(buildConfig.pages)) {
+    outputPlugins.push(new OutputManagerPlugin(page, afterSitePlugins, title));
   }
   return outputPlugins;
 }
