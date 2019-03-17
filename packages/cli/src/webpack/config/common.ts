@@ -2,7 +2,13 @@ import { resolve } from 'path';
 import webpack = require('webpack');
 import { ICommonConfig } from '../../interface/common-config';
 import { AfterSitePlugin } from '../../plugin/plugin';
-import { getLoader4CSS, getLoader4File, getLoader4TypeScript, getOptions4TypeScript } from '../loaders';
+import {
+  getLoader4CSS,
+  getLoader4File,
+  getLoader4Markdown,
+  getLoader4TypeScript,
+  getOptions4TypeScript,
+} from '../loaders';
 import { getOutputManagerPlugin, plugins } from '../plugins';
 import { getWebpackConfigEntry } from './entry';
 
@@ -14,6 +20,10 @@ export function commonWebpackConfig(commonConfig: ICommonConfig, afterSitePlugin
         {
           test: /\.css$/,
           use: getLoader4CSS(),
+        },
+        {
+          test: /\.md$/,
+          use: getLoader4Markdown(),
         },
         {
           test: /\.tsx$/,

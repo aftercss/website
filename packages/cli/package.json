@@ -15,6 +15,7 @@
   "author": "zoolsher.zl",
   "license": "ISC",
   "dependencies": {
+    "@aftercss/markdown-loader": "^0.1.0",
     "@types/friendly-errors-webpack-plugin": "^0.1.1",
     "@types/node": "^10.12.21",
     "chalk": "^2.4.2",
