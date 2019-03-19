@@ -45,7 +45,6 @@ module.exports = {
     branch: 'test',
     dist: 'dist',
     repo: 'website.git',
-    type: 'project',
     username: 'aftercss',
   },
   devSer: {

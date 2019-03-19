@@ -23,7 +23,17 @@ export function commonWebpackConfig(commonConfig: ICommonConfig, afterSitePlugin
         },
         {
           test: /\.md$/,
-          use: getLoader4Markdown(),
+          use: [
+            {
+              loader: getLoader4TypeScript(),
+              options: Object.assign(getOptions4TypeScript(), {
+                appendTsxSuffixTo: [/\.md$/],
+              }),
+            },
+            {
+              loader: getLoader4Markdown(),
+            },
+          ],
         },
         {
           test: /\.tsx$/,

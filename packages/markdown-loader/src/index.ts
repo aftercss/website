@@ -18,24 +18,22 @@ function markdownLoader(src: string): string {
     title: '',
   };
   md.use(require('markdown-it-anchor')).use(MarkdownItNav);
-  const html = md.render(src, nav);
-  return generateContent(html, nav);
+  return generateContent(md.render(src, nav).replace(/class="/g, 'className="'), nav);
 }
 
-function render(nav: INav): string {
-  let listHTML = `
-		<ul class="navList">
-	`;
+function renderNav(nav: INav): string {
+  let listItems = '';
   nav.list.forEach(item => {
-    listHTML += `
-		<li class="item-level${item.level}">
+    listItems += `
+		<li className="item-level${item.level}">
 			<a href="#${item.title}">${item.title}</a>
 		</li>`;
   });
   return `
-	<div class="navGroup">
-		<div class="navGroupName">${nav.title}</div>
-		${listHTML}
+	<div className="navGroup">
+		<div className="navGroupName">${nav.title}</div>
+		<ul className="navList">
+			${listItems}
 		</ul>
 	</div>
 `;
@@ -45,19 +43,15 @@ function generateContent(html: string, nav: INav): string {
   return `
 	import * as React from 'react';
 	
-	export class Header extends React.Component {
+	export class MDContent extends React.Component {
 		public render() {
-			return (
-				<template>
-					${html}
-				</template>
-			);
+			return (<div>${html}</div>);
 		}
-		public getRawNav(){
-			return JSON.parse(${JSON.stringify(nav)})
-		}
-		public getNavHTML(): string{
-			return ${render(nav)}
+	}
+
+	export class MDNav extends React.Component {
+		public render(){
+			return (${renderNav(nav)})
 		}
 	}
 	`;

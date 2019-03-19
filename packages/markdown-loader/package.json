@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "description": "markdown loader",
   "main": "lib/index.js",
-  "bin": "./bin/after",
   "private": true,
   "scripts": {
     "lint:ts": "./../../node_modules/.bin/tslint -c ./../../tslint.json -p tsconfig.json",

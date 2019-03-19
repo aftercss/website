@@ -9,7 +9,7 @@
       "request": "launch",
       "name": "启动程序",
       "program": "${workspaceFolder}/packages/cli/bin/after",
-      "args": ["deploy"],
+      "args": ["dev"],
       "cwd": "${workspaceFolder}/packages/site",
       "console": "integratedTerminal"
     }
