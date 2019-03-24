@@ -2,9 +2,12 @@ declare module '*.png';
 declare module '*.jpg';
 declare module '*.jpeg';
 declare module '*.gif';
+
 declare module '*.worker.ts' {
-  const value: string;
-  export = value;
+  class WebpackWorker extends Worker {
+    constructor();
+  }
+  export default WebpackWorker;
 }
 
 declare module '*.md' {

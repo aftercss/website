@@ -7,6 +7,7 @@ import {
   getLoader4File,
   getLoader4Markdown,
   getLoader4TypeScript,
+  getLoader4Worker,
   getOptions4TypeScript,
 } from '../loaders';
 import { getOutputManagerPlugin, plugins } from '../plugins';
@@ -20,6 +21,10 @@ export function commonWebpackConfig(commonConfig: ICommonConfig, afterSitePlugin
         {
           test: /\.css$/,
           use: getLoader4CSS(),
+        },
+        {
+          test: /\.worker\.ts$/,
+          use: getLoader4Worker(),
         },
         {
           test: /\.md$/,
@@ -36,7 +41,7 @@ export function commonWebpackConfig(commonConfig: ICommonConfig, afterSitePlugin
           ],
         },
         {
-          test: /\.tsx$/,
+          test: /\.tsx?$/,
           use: [
             {
               loader: getLoader4TypeScript(),
@@ -56,6 +61,7 @@ export function commonWebpackConfig(commonConfig: ICommonConfig, afterSitePlugin
     },
     output: {
       filename: '[name].js',
+      globalObject: 'this',
       libraryTarget: 'window',
       path: resolve(commonConfig.cwd, commonConfig.output),
     },
