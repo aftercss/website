@@ -1,6 +1,6 @@
 {
   "name": "@aftercss/site",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "site",
   "main": "lib/index.js",
   "private": true,
@@ -15,7 +15,7 @@
   "dependencies": {
     "@aftercss/parser": "^0.1.7",
     "@aftercss/shared": "^0.1.7",
-    "@aftercss/site-cli": "^0.1.0",
+    "@aftercss/site-cli": "^0.1.1",
     "@aftercss/tokenizer": "^0.1.7",
     "antd": "^3.13.2",
     "moment": "^2.24.0",
