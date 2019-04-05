@@ -4,6 +4,9 @@
   "description": "build cli",
   "main": "lib/index.js",
   "bin": "./bin/after",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "lint:ts": "./../../node_modules/.bin/tslint -c ./../../tslint.json -p tsconfig.json",
     "lint:ts:fix": "./../../node_modules/.bin/tslint -c ./../../tslint.json --fix -p tsconfig.json",
@@ -43,5 +46,6 @@
     "css-loader": "^2.1.0",
     "file-loader": "^3.0.1",
     "style-loader": "^0.23.1"
-  }
+  },
+  "gitHead": "0b726bae28c7f222e882934cc199600f002ce2f0"
 }
