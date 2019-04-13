@@ -20,7 +20,7 @@ export class DevController extends CommonController {
     this.registerPlugins(devConfig);
     const webpackConfig = devWebpackConfig(devConfig, this.plugins);
     const devSerConfig = await this.loadWebpackDevConfigWithDefaultValue();
-    runWebpack(webpackConfig, devSerConfig);
+    runWebpack(await this.pluginHandleWebpackConfig(webpackConfig), devSerConfig);
   }
   public async loadWebpackDevConfigWithDefaultValue(): Promise<webpackDevServer.Configuration> {
     const configFilePath = path.resolve(this.option.cwd, UserDefinedConfigPath);

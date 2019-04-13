@@ -2,7 +2,14 @@ import { resolve } from 'path';
 import webpack = require('webpack');
 import { ICommonConfig } from '../../interface/common-config';
 import { AfterSitePlugin } from '../../plugin/plugin';
-import { getLoader4CSS, getLoader4File, getLoader4TypeScript, getOptions4TypeScript } from '../loaders';
+import {
+  getLoader4CSS,
+  getLoader4File,
+  getLoader4Markdown,
+  getLoader4TypeScript,
+  getLoader4Worker,
+  getOptions4TypeScript,
+} from '../loaders';
 import { getOutputManagerPlugin, plugins } from '../plugins';
 import { getWebpackConfigEntry } from './entry';
 
@@ -16,7 +23,25 @@ export function commonWebpackConfig(commonConfig: ICommonConfig, afterSitePlugin
           use: getLoader4CSS(),
         },
         {
-          test: /\.tsx$/,
+          test: /\.worker\.ts$/,
+          use: getLoader4Worker(),
+        },
+        {
+          test: /\.md$/,
+          use: [
+            {
+              loader: getLoader4TypeScript(),
+              options: Object.assign(getOptions4TypeScript(), {
+                appendTsxSuffixTo: [/\.md$/],
+              }),
+            },
+            {
+              loader: getLoader4Markdown(),
+            },
+          ],
+        },
+        {
+          test: /\.tsx?$/,
           use: [
             {
               loader: getLoader4TypeScript(),
@@ -36,13 +61,13 @@ export function commonWebpackConfig(commonConfig: ICommonConfig, afterSitePlugin
     },
     output: {
       filename: '[name].js',
+      globalObject: 'this',
       libraryTarget: 'window',
       path: resolve(commonConfig.cwd, commonConfig.output),
     },
     plugins: plugins.concat(getOutputManagerPlugin(commonConfig, afterSitePlugins)),
     resolve: {
       alias: {
-        // TODO: 把 webpack config 弄出去让人 merge 一下吧这样下去会死。
         ...commonConfig.alias,
       },
       extensions: ['.tsx', '.ts', '.js', '.json'],

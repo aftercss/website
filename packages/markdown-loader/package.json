@@ -1,0 +1,27 @@
+{
+  "name": "@aftercss/markdown-loader",
+  "version": "0.1.1",
+  "description": "markdown loader",
+  "main": "lib/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "lint:ts": "./../../node_modules/.bin/tslint -c ./../../tslint.json -p tsconfig.json",
+    "lint:ts:fix": "./../../node_modules/.bin/tslint -c ./../../tslint.json --fix -p tsconfig.json",
+    "build": "./../../node_modules/.bin/tsc -p tsconfig.json",
+    "dev": "./../../node_modules/.bin/tsc -p tsconfig.json --watch",
+    "prepublish": "npm run build"
+  },
+  "author": "zoolsher.zl",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/markdown-it": "^0.0.7",
+    "@types/node": "^11.11.3"
+  },
+  "dependencies": {
+    "markdown-it": "^8.4.2",
+    "markdown-it-anchor": "^5.0.2"
+  },
+  "gitHead": "0b726bae28c7f222e882934cc199600f002ce2f0"
+}

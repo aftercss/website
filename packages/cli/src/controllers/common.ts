@@ -43,11 +43,18 @@ export class CommonController extends CLIController<ICommonOptionType> {
     if (!config.plugin) {
       return;
     }
+    // const internalName = new Set(Object.keys(InternalPlugins));
+    // const allNames = new Set(Object.keys(config.plugin));
+
     const PluginKlassX: Record<string, IConstructor<AfterSitePlugin>> = { ...InternalPlugins };
-    for (const pluginKlassName in PluginKlassX) {
-      if (config.plugin[pluginKlassName] && PluginKlassX.hasOwnProperty(pluginKlassName)) {
-        const PluginKlass = PluginKlassX[pluginKlassName];
-        this.plugins.push(new PluginKlass(config.plugin[pluginKlassName]));
+    for (const pluginKlassName in config.plugin) {
+      if (config.plugin[pluginKlassName]) {
+        if (PluginKlassX[pluginKlassName]) {
+          const PluginKlass = PluginKlassX[pluginKlassName];
+          this.plugins.push(new PluginKlass(config.plugin[pluginKlassName]));
+        } else {
+          this.plugins.push(config.plugin[pluginKlassName]);
+        }
       }
     }
   }
@@ -73,7 +80,7 @@ export class CommonController extends CLIController<ICommonOptionType> {
        * TODO： 之后解决一下ES6的问题
        * TODO: 配置简化 缩写 部分默认配置等 拓展等
        */
-      return { ...require(configFilePath).webpack, ...{ cwd: this.option.cwd } };
+      return { ...require(configFilePath).build, ...{ cwd: this.option.cwd } };
     } else {
       return { ...UserDefinedConfigDefaultValue, ...{ cwd: this.option.cwd } };
     }

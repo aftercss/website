@@ -3,6 +3,7 @@ export interface ICommonConfig {
   pages: {
     [key: string]: {
       entry: string;
+      title?: string;
     };
   };
   alias: Record<string, string>;

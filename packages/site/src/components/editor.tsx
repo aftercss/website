@@ -1,31 +1,16 @@
 import { Checkbox, Radio } from 'antd';
+import Worker from '../worker/parser.worker.ts';
 /* tslint:disable */
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import * as Monaco from 'monaco-editor';
 import * as React from 'react';
-import { createWorker, ITypedWorker } from 'typed-web-workers';
 /* tslint:disable */
-import { CSSParser } from '@aftercss/parser';
-/* tslint:disable */
-import { Root } from '@aftercss/parser/lib/parser-node/index';
-import { AfterContext } from '@aftercss/shared';
-import { CSSTokenizer } from '@aftercss/tokenizer';
-import * as postcss from 'postcss';
 import './editor.css';
 
 export interface IEditorProp {
   language: string;
 }
 
-export interface IWorkerInput {
-  css: string;
-  type: string;
-}
-
-export interface IWorkerOuput {
-  res: postcss.Root | Root;
-  time: number;
-}
 export interface IEditorState {
   ast: object;
   showLocation: boolean;
@@ -38,10 +23,11 @@ export interface IInputData {
   css: string;
   type: 'Aftercss' | 'Postcss';
 }
+
 export class Editor extends React.Component<IEditorProp, IEditorState> {
   private inputEditor: Monaco.editor.IStandaloneCodeEditor;
   private resultEditor: Monaco.editor.IStandaloneCodeEditor;
-  private timer: number;
+  private timer: NodeJS.Timeout;
   constructor(props: IEditorProp) {
     super(props);
     this.state = {
@@ -148,42 +134,22 @@ export class Editor extends React.Component<IEditorProp, IEditorState> {
   }
 
   private startWorker() {
-    function workFn(input: IWorkerInput, callback: (_: IWorkerOuput) => void): void {
-      const out: IWorkerOuput = {
-        res: new Root(),
-        time: 0,
-      };
-      const start = performance.now();
-      try {
-        if (input.type === 'Aftercss') {
-          const tokenizer = new CSSTokenizer(
-            new AfterContext({
-              fileContent: input.css,
-            }),
-          );
-          const parser = new CSSParser(tokenizer);
-          out.res = parser.parseStyleSheet();
-        } else if (input.type === 'Postcss') {
-          out.res = postcss.parse(input.css);
-        }
-      } catch (err) {
-        out.res = err.message;
-      }
-      out.time = performance.now() - start;
-      callback(out);
-    }
-    const self = this;
-    function updateState(out: IWorkerOuput) {
-      self.setState({
-        ast: out.res,
-        time: out.time,
-      });
-    }
+    const worker = Worker();
+    console.log('worker started');
 
-    const typedWorker: ITypedWorker<IWorkerInput, IWorkerOuput> = createWorker(workFn, updateState);
-    typedWorker.postMessage({
+    worker.postMessage({
       css: this.inputEditor.getValue(),
       type: this.state.type,
+    });
+    worker.addEventListener('message', (event: any) => {
+      this.setState(
+        {
+          ast: event.data.res,
+          time: event.data.time,
+        },
+        this.showResult,
+      );
+      worker.terminate();
     });
   }
 
