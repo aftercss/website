@@ -23,6 +23,7 @@ export interface IInputData {
   css: string;
   type: 'Aftercss' | 'Postcss';
 }
+
 export class Editor extends React.Component<IEditorProp, IEditorState> {
   private inputEditor: Monaco.editor.IStandaloneCodeEditor;
   private resultEditor: Monaco.editor.IStandaloneCodeEditor;
@@ -133,17 +134,21 @@ export class Editor extends React.Component<IEditorProp, IEditorState> {
   }
 
   private startWorker() {
-    const worker = new Worker();
+    const worker = Worker();
+    console.log('worker started');
 
     worker.postMessage({
       css: this.inputEditor.getValue(),
       type: this.state.type,
     });
-    worker.addEventListener('message', event => {
-      this.setState({
-        ast: event.data.res,
-        time: event.data.time,
-      });
+    worker.addEventListener('message', (event: any) => {
+      this.setState(
+        {
+          ast: event.data.res,
+          time: event.data.time,
+        },
+        this.showResult,
+      );
       worker.terminate();
     });
   }

@@ -68,7 +68,6 @@ export function commonWebpackConfig(commonConfig: ICommonConfig, afterSitePlugin
     plugins: plugins.concat(getOutputManagerPlugin(commonConfig, afterSitePlugins)),
     resolve: {
       alias: {
-        // TODO: 把 webpack config 弄出去让人 merge 一下吧这样下去会死。
         ...commonConfig.alias,
       },
       extensions: ['.tsx', '.ts', '.js', '.json'],

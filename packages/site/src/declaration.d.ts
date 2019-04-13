@@ -7,7 +7,9 @@ declare module '*.worker.ts' {
   class WebpackWorker extends Worker {
     constructor();
   }
-  export default WebpackWorker;
+  const getWorker: () => WebpackWorker;
+
+  export default getWorker;
 }
 
 declare module '*.md' {
