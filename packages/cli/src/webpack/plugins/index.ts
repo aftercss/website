@@ -12,8 +12,9 @@ export const plugins: any = [
   }),
 ];
 
-export function getBuildPlugins() {
-  return [new BundleAnalyzerPlugin()];
+export function getBuildPlugins(): any[] {
+  // return [new BundleAnalyzerPlugin()];
+  return [];
 }
 
 export function getDevPlugins() {
