@@ -1,5 +1,6 @@
 var MonacoEditorAfterSitePlugin = require('./build/index').MonacoEditorAfterSitePlugin;
 module.exports = {
+  docs: './docs',
   build: {
     pages: {
       index: { entry: './src/index.tsx', title: 'spades' },

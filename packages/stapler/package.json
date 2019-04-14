@@ -1,0 +1,24 @@
+{
+  "name": "@aftercss/stapler",
+  "version": "0.1.0",
+  "description": "after stapler",
+  "main": "lib/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "lint:ts": "./../../node_modules/.bin/tslint -c ./../../tslint.json -p tsconfig.json",
+    "lint:ts:fix": "./../../node_modules/.bin/tslint -c ./../../tslint.json --fix -p tsconfig.json",
+    "build": "./../../node_modules/.bin/tsc -p tsconfig.json",
+    "dev": "./../../node_modules/.bin/tsc -p tsconfig.json --watch",
+    "prepublish": "npm run build"
+  },
+  "author": "zoolsher.zl",
+  "license": "ISC",
+  "dependencies": {
+    "glob": "^7.1.3"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.1"
+  }
+}
