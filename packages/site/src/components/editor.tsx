@@ -2,10 +2,26 @@ import { Checkbox, Radio } from 'antd';
 import Worker from '../worker/parser.worker.ts';
 /* tslint:disable */
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
-import * as Monaco from 'monaco-editor';
+import 'monaco-editor/esm/vs/editor/browser/controller/coreCommands.js';
+import 'monaco-editor/esm/vs/editor/contrib/find/findController.js';
+import * as monaco from 'monaco-editor/esm/vs/editor/editor.api.js';
+import 'monaco-editor/esm/vs/basic-languages/css/css.contribution.js';
+import 'monaco-editor/esm/vs/language/json/monaco.contribution';
 import * as React from 'react';
 /* tslint:disable */
 import './editor.css';
+
+(self as any).MonacoEnvironment = {
+	getWorkerUrl: function (moduleId: string, label: string) {
+		if (label === 'json') {
+			return './json.worker.js';
+		}
+		if (label === 'css') {
+			return './css.worker.js';
+		}
+		return './editor.worker.js';
+	}
+}
 
 export interface IEditorProp {
   language: string;
@@ -25,8 +41,8 @@ export interface IInputData {
 }
 
 export class Editor extends React.Component<IEditorProp, IEditorState> {
-  private inputEditor: Monaco.editor.IStandaloneCodeEditor;
-  private resultEditor: Monaco.editor.IStandaloneCodeEditor;
+  private inputEditor: monaco.editor.IStandaloneCodeEditor;
+  private resultEditor: monaco.editor.IStandaloneCodeEditor;
   private timer: NodeJS.Timeout;
   constructor(props: IEditorProp) {
     super(props);
@@ -73,11 +89,11 @@ export class Editor extends React.Component<IEditorProp, IEditorState> {
     );
   }
   public componentDidMount() {
-    this.inputEditor = Monaco.editor.create(document.getElementById('input'), {
+    this.inputEditor = monaco.editor.create(document.getElementById('input'), {
       language: this.props.language,
       value: '/* input css content*/',
     });
-    this.resultEditor = Monaco.editor.create(document.getElementById('result'), {
+    this.resultEditor = monaco.editor.create(document.getElementById('result'), {
       language: 'json',
       value: '{}',
     });
