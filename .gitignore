@@ -3,5 +3,6 @@ lib/
 **/.DS_Store
 **/lerna-debug.log
 **/yarn-error.log
+**/yarn-lock.json
 dist/
 *.tgz

@@ -10,9 +10,7 @@
     "build": "./../cli/bin/after build",
     "dev": "./../cli/bin/after dev",
     "deploy": "./../cli/bin/after deploy",
-    "https:key": "cd dist && openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem",
-    "https:server": "cd dist && http-server -S -C cert.pem",
-    "https": "npm run https:key && npm run https:server"
+    "https": "cd dist && ws --https"
   },
   "author": "zoolsher.zl",
   "license": "ISC",
@@ -34,7 +32,7 @@
     "@types/react": "^16.8.2",
     "@types/react-dom": "^16.8.0",
     "clean-webpack-plugin": "^2.0.1",
-    "http-server": "^0.11.1",
+    "local-web-server": "^2.6.1",
     "monaco-editor-webpack-plugin": "^1.7.0",
     "webpack": "*"
   }
