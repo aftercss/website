@@ -1,60 +1,21 @@
-import * as MarkdownIt from 'markdown-it';
-import MarkdownItNav from './markdown-it-nav';
+import * as matter from 'gray-matter';
+import {resolve} from 'path'
+import markdown from './markdown';
+import { getHeaders, getTitle } from './utils';
 
-export interface IListItem {
-  level: number;
-  title: string;
-}
+export default function markdownLoader(src: string) {
+  const frontMatter = matter(src);
+  const title = getTitle(frontMatter);
+  const headers = getHeaders(frontMatter.content, ['h2', 'h3']);
+  const html = markdown.render(frontMatter.content).replace(/\bclass="/g, 'className="');
 
-export interface INav {
-  title: string;
-  list: IListItem[];
-}
-
-function markdownLoader(src: string): string {
-  const md = new MarkdownIt();
-  const nav: INav = {
-    list: [],
-    title: '',
-  };
-  md.use(require('markdown-it-anchor')).use(MarkdownItNav);
-  return generateContent(md.render(src, nav).replace(/class="/g, 'className="'), nav);
-}
-
-function renderNav(nav: INav): string {
-  let listItems = '';
-  nav.list.forEach(item => {
-    listItems += `
-		<li className="item-level${item.level}">
-			<a href="#${item.title}">${item.title}</a>
-		</li>`;
-  });
   return `
-	<div className="navGroup">
-		<div className="navGroupName">${nav.title}</div>
-		<ul className="navList">
-			${listItems}
-		</ul>
-	</div>
-`;
+  import * as React from 'react';
+  ${frontMatter.data.imports && frontMatter.data.imports.join(';\n')};
+  export default class MDContent extends React.Component<any>{
+    public render(){
+      return (<div>${html}</div>);
+    }
+  }
+  `;
 }
-
-function generateContent(html: string, nav: INav): string {
-  return `
-	import * as React from 'react';
-	
-	export class MDContent extends React.Component {
-		public render() {
-			return (<div>${html}</div>);
-		}
-	}
-
-	export class MDNav extends React.Component {
-		public render(){
-			return (${renderNav(nav)})
-		}
-	}
-	`;
-}
-
-export default markdownLoader;
