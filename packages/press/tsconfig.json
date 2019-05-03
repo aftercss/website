@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "module": "es6",
+    "noImplicitAny": true,
+    "alwaysStrict": true,
+    "noImplicitThis": true,
+    "outDir": "lib",
+    "sourceMap": true,
+    "target": "es2015",
+    "noEmitOnError": true,
+    "noEmit": true,
+    "declaration": true,
+    "moduleResolution": "node",
+    "jsx": "react",
+    "resolveJsonModule": true,
+    "typeRoots": ["./node_modules/@types", "./*.d.ts"]
+  },
+  "include": ["src/**/*", "**/*.json"],
+  "exclude": ["**/*.spec.ts"]
+}

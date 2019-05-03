@@ -1,0 +1,34 @@
+{
+  "name": "@aftercss/press",
+  "version": "0.0.1",
+  "description": "static website generator",
+  "main": "lib/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "lint:ts": "./../../node_modules/.bin/tslint -c ./../../tslint.json -p tsconfig.json",
+    "lint:ts:fix": "./../../node_modules/.bin/tslint -c ./../../tslint.json --fix -p tsconfig.json",
+    "build": "./../../node_modules/.bin/tsc -p tsconfig.json",
+    "dev": "./../../node_modules/.bin/tsc -p tsconfig.json --watch",
+    "prepublish": "npm run build"
+  },
+  "author": "zoolsher.zl",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/globby": "^9.1.0",
+    "@types/node": "^10.12.21",
+    "@types/react": "^16.8.15",
+    "@types/react-dom": "^16.8.4",
+    "@types/react-router-dom": "^4.3.2"
+  },
+  "gitHead": "0b726bae28c7f222e882934cc199600f002ce2f0",
+  "dependencies": {
+    "@aftercss/site-cli": "^0.1.1",
+    "commander": "^2.20.0",
+    "globby": "^9.2.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.0"
+  }
+}
