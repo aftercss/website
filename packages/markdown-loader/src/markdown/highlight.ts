@@ -8,7 +8,7 @@ const DEFAULT_LANGS = ['text'];
 loadLanguages(DEFAULT_LANGS);
 
 function wrap(code: string, lang: string) {
-  return `<pre v-pre class="language-${lang}"><code>${code}</code></pre>`;
+  return `<pre className="language-${lang}"><code>${code}</code></pre>`;
 }
 
 export default function highlight(str: string, lang: string) {
@@ -32,6 +32,12 @@ export default function highlight(str: string, lang: string) {
       lang = 'text';
     }
   }
-  const code = Prismjs.highlight(str, Prismjs.languages[lang], lang).replace(/[{}]/g, string => `{'${string}'}`);
+  const code = Prismjs.highlight(str, Prismjs.languages[lang], lang).replace(/[{}\n]/g, string => {
+    if (string === '\n') {
+      return '<br/>';
+    }
+    return `{'${string}'}`;
+  });
+
   return wrap(code, lang);
 }
