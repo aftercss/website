@@ -19,7 +19,7 @@ export default class PreProcessor {
     this.cwd = cwd;
     this.options = {
       pages: [],
-      theme: resolve(__dirname, '../theme'),
+      theme: resolve(__dirname, '../../app/theme'),
     };
   }
   // 使用前必须先初始化
@@ -88,7 +88,7 @@ export default class PreProcessor {
   }
 
   private async writeToTemp(fileName: string, content: string) {
-    const base = '../temp';
+    const base = '../../app/temp';
     await writeP(resolve(__dirname, base, fileName), content);
   }
 }

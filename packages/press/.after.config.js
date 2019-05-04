@@ -1,7 +1,7 @@
 module.exports = {
   build: {
     pages: {
-      index: { entry: './src/temp/app.tsx', title: '@aftercss/press' },
+      index: { entry: './app/temp/app.tsx', title: '@aftercss/press' },
     },
     output: './dist',
   },
@@ -16,6 +16,6 @@ module.exports = {
     hot: true,
     open: true,
     port: 8080,
-    https: true,
+    https: false,
   },
 };
