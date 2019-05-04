@@ -15,7 +15,7 @@ export function prepareKlass(ControllerKlasses: Array<IControllerKlass<any>>) {
         (cmdInstance as any).option(...option);
       }
     }
-    cmdInstance.action((command, cmd) => {
+    cmdInstance.action((cmd) => {
       const controller = new ControllerKlass();
       controller.option = controller.parseOption(cmd);
       controller.entry().catch(e => {

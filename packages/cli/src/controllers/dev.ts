@@ -15,6 +15,7 @@ const defaultWebpackServerConfig: webpackDevServer.Configuration = {
 
 export class DevController extends CommonController {
   public static command = 'dev';
+  public static options = [['-w, --workdir [workdir]', 'current work directory', '']];
   public async entry() {
     const devConfig = await this.loadUserConfigWithDefaultValue();
     this.registerPlugins(devConfig);

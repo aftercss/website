@@ -31,7 +31,9 @@ export const UserDefinedConfigDefaultValue = {
 export class CommonController extends CLIController<ICommonOptionType> {
   public plugins: AfterSitePlugin[] = [];
   public parseOption(commander: any) {
-    return { cwd: process.cwd() };
+    return {
+      cwd: path.isAbsolute(commander.workdir) ? commander.workdir : path.resolve(process.cwd(), commander.workdir),
+    };
   }
 
   /**

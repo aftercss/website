@@ -4,6 +4,7 @@ import { CommonController } from './common';
 
 export class BuildController extends CommonController {
   public static command = 'build';
+  public static options = [['-w, --workdir [workdir]', 'current work directory', '']];
   /**
    * Controller 入口
    */
