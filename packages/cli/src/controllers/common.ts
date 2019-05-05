@@ -82,6 +82,14 @@ export class CommonController extends CLIController<ICommonOptionType> {
        * TODO： 之后解决一下ES6的问题
        * TODO: 配置简化 缩写 部分默认配置等 拓展等
        */
+      if (require.cache[configFilePath]) {
+        const moduleToDel = require.cache[configFilePath];
+        // prevent memory leak
+        if (moduleToDel.parent) {
+          moduleToDel.parent.children.splice(moduleToDel.parent.children.indexOf(moduleToDel), 1);
+        }
+        delete require.cache[configFilePath];
+      }
       return { ...require(configFilePath).build, ...{ cwd: this.option.cwd } };
     } else {
       return { ...UserDefinedConfigDefaultValue, ...{ cwd: this.option.cwd } };

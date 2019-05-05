@@ -1,5 +1,5 @@
 import { buildWebpackConfig } from '../webpack/config/build';
-import { runWebpack } from '../webpack/run/build';
+import BuildRunner from '../webpack/run/build';
 import { CommonController } from './common';
 
 export class BuildController extends CommonController {
@@ -12,6 +12,6 @@ export class BuildController extends CommonController {
     const buildConfig = await this.loadUserConfigWithDefaultValue();
     this.registerPlugins(buildConfig);
     const webpackConfig = buildWebpackConfig(buildConfig, this.plugins);
-    runWebpack(await this.pluginHandleWebpackConfig(webpackConfig));
+    BuildRunner.start(await this.pluginHandleWebpackConfig(webpackConfig));
   }
 }
