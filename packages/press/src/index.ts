@@ -22,8 +22,7 @@ export function exec(args: string[]) {
 
 async function execCmd(args: string[]) {
   const preprocesser = new PreProcessor(process.cwd());
-  await preprocesser.init();
-  await preprocesser.genEntryFile();
-  args.push('-w', resolve(__dirname, '../'));
+  await preprocesser.run();
+  args.push('-w', resolve(__dirname, '../app/.temp'));
   cliEntry(args);
 }

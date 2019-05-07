@@ -2,13 +2,13 @@ import * as fs from 'fs';
 import globby from 'globby';
 import { resolve } from 'path';
 import { promisify } from 'util';
+import { getConfig } from './config';
+import { getMDCompFileContent } from './md-comps';
 
 const writeP = promisify(fs.writeFile);
-const INDEX_REG = /\breadme.md/i;
 
 export interface IOptions {
   pages: string[];
-  // TODO: 后面支持可自定义theme
   theme: string;
 }
 
@@ -22,9 +22,18 @@ export default class PreProcessor {
       theme: resolve(__dirname, '../../app/theme'),
     };
   }
-  // 使用前必须先初始化
-  public async init() {
+
+  public async run() {
     await this.resolveOptions();
+    // generate app/.temp/md-comp.ts
+    const mdCompFile = await getMDCompFileContent(this.options.pages, resolve(this.cwd, 'docs'));
+    await this.writeToTemp('md-comps.ts', mdCompFile);
+    // generate app/.temp/.after.config.js
+    const config = getConfig(this.cwd);
+    config.build.alias = {
+      '@theme': this.options.theme,
+    };
+    await this.writeToTemp('.after.config.js', `module.exports=${JSON.stringify(config)}`);
   }
 
   public async resolveOptions() {
@@ -43,52 +52,12 @@ export default class PreProcessor {
       this.options.theme = resolve(this.cwd, 'theme');
     }
   }
-  public async genEntryFile() {
-    let componentsToImport: string = '';
-    let routes: string = '';
-    this.options.pages.map(page => {
-      const component = this.fileToComponentName(page);
-      componentsToImport += `import ${component} from '${resolve(this.cwd, 'docs', page)}';\n`;
-      routes += `<Route exact path='${this.fileToPath(page)}' component={${component}}/>\n`;
-    });
-
-    const routeFile = `
-      import * as React from 'react';
-      import * as ReactDOM from 'react-dom';
-      import { HashRouter, Link, Route, Switch } from 'react-router-dom';
-      import Layout from '${this.options.theme}/Layout'
-      ${componentsToImport}
-      function App() {
-        return (
-          <HashRouter>
-            <Layout>
-              <Switch>
-                ${routes}
-              </Switch>
-            </Layout>
-          </HashRouter>
-        )
-      }
-      ReactDOM.render(<App/>, document.querySelector('#root'));
-    `;
-    await this.writeToTemp('app.tsx', routeFile);
-  }
-
-  public fileToComponentName(file: string) {
-    const main = file.slice(1, -3); // 去掉extname
-    return file[0].toUpperCase() + main.replace(/\/\.*(\w)/g, (match, p1) => p1.toUpperCase());
-  }
-
-  public fileToPath(file: string) {
-    if (INDEX_REG.test(file)) {
-      return `/${file.replace(INDEX_REG, '')}`;
-    } else {
-      return `/${file.replace('.md', '')}`;
-    }
-  }
 
   private async writeToTemp(fileName: string, content: string) {
-    const base = '../../app/temp';
-    await writeP(resolve(__dirname, base, fileName), content);
+    const base = resolve(__dirname, '../../app/.temp');
+    if (!fs.existsSync(base)) {
+      fs.mkdirSync(base);
+    }
+    await writeP(resolve(base, fileName), content);
   }
 }
