@@ -34,7 +34,7 @@ export class DevController extends CommonController {
   }
   public async loadWebpackDevConfigWithDefaultValue(): Promise<webpackDevServer.Configuration> {
     const configFilePath = path.resolve(this.option.cwd, UserDefinedConfigPath);
-    const exists = await promisify(fs.exists)(configFilePath);
+    const exists = fs.existsSync(configFilePath);
 
     if (exists) {
       if (require.cache[configFilePath]) {

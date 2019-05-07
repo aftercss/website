@@ -44,7 +44,7 @@ export class DeployController extends CLIController<IDeployOptionType> {
 
   public async loadUserConfig(): Promise<IDeployConfig> {
     const configFilePath = path.resolve(this.option.cwd, UserDefinedConfigPath);
-    const exists = await promisify(fs.exists)(configFilePath);
+    const exists = fs.existsSync(configFilePath);
     if (!exists) {
       throw new Error('[aftercss/site-cli] There should be a configuration file in the root directory.');
     }

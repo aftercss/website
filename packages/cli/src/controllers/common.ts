@@ -76,7 +76,7 @@ export class CommonController extends CLIController<ICommonOptionType> {
    */
   public async loadUserConfigWithDefaultValue(): Promise<IBuildConfig> {
     const configFilePath = path.resolve(this.option.cwd, UserDefinedConfigPath);
-    const exists = await promisify(fs.exists)(configFilePath);
+    const exists = fs.existsSync(configFilePath);
     if (exists) {
       /**
        * TODO： 之后解决一下ES6的问题
