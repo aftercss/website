@@ -1,18 +1,24 @@
 import * as MarkdownIt from 'markdown-it';
-export default (md: MarkdownIt, navDepth: number = 2) => {
+import * as S from 'string';
+export default (md: MarkdownIt, includes: string[] = []) => {
   const originalHeadingOpen = md.renderer.rules.heading_open;
 
   md.renderer.rules.heading_open = function(...args) {
     const [tokens, idx, options, env, self] = args;
 
     const level = +tokens[idx].tag.substring(1);
-    const title = tokens[idx + 1].children.reduce((acc, t) => acc + t.content, '');
+    const title = tokens[idx + 1].content;
 
-    if (level === 1 && !env.title) {
+    const id = S(title).slugify().s;
+
+    tokens[0].attrPush(['id', id]);
+
+    if (!env.title) {
       env.title = title;
     }
-    if (level === navDepth) {
-      env.list.push({
+    if (includes.includes(tokens[0].tag)) {
+      env.headers.push({
+        id: S(title).slugify().s,
         level,
         title,
       });

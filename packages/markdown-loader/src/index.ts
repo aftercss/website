@@ -1,17 +1,34 @@
 import * as matter from 'gray-matter';
-import {resolve} from 'path'
 import markdown from './markdown';
-import { getHeaders, getTitle } from './utils';
+
+export interface INav {
+  headers: IHeader[];
+  title: string;
+}
+
+export interface IHeader {
+  id: string;
+  level: string;
+  title: string;
+}
 
 export default function markdownLoader(src: string) {
   const frontMatter = matter(src);
-  const title = getTitle(frontMatter);
-  const headers = getHeaders(frontMatter.content, ['h2', 'h3']);
-  const html = markdown.render(frontMatter.content).replace(/\bclass="/g, 'className="');
+  const nav: INav = {
+    headers: [],
+    title: frontMatter.data.title,
+  };
+  const html = markdown.render(frontMatter.content, nav).replace(/\bclass="/g, 'className="');
 
   return `
   import * as React from 'react';
   ${frontMatter.data.imports && frontMatter.data.imports.join(';\n')};
+  export function getTitle(){
+    return '${nav.title}';
+  }
+  export function getHeaders(){
+    return ${JSON.stringify(nav.headers)};
+  }
   export default class MDContent extends React.Component<any>{
     public render(){
       return (<div>${html}</div>);
