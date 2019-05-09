@@ -11,4 +11,4 @@ export default markdown({
   typographer: true,
 })
   .use(container)
-  .use(headers, ['h1', 'h2']);
+  .use(headers, ['h1', 'h2', 'h3']);

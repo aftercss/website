@@ -11,12 +11,12 @@ export default (md: MarkdownIt, includes: string[] = []) => {
 
     const id = S(title).slugify().s;
 
-    tokens[0].attrPush(['id', id]);
+    tokens[idx].attrPush(['id', id]);
 
     if (!env.title) {
       env.title = title;
     }
-    if (includes.includes(tokens[0].tag)) {
+    if (includes.includes(tokens[idx].tag)) {
       env.headers.push({
         id: S(title).slugify().s,
         level,
