@@ -1,14 +1,19 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { INav } from '../index';
+import Nav from './Nav';
+
+export interface ILayoutProps {
+  navData: INav[];
+}
 
 import './styles/highlight.css';
 
-export default class Layout extends React.Component<any> {
+export default class Layout extends React.Component<ILayoutProps> {
   public render() {
     return (
       <div>
-        <Link to="/user/ttt">user.ttt</Link>
         {this.props.children}
+        <Nav data={this.props.navData} />
       </div>
     );
   }

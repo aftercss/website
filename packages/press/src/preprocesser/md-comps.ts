@@ -21,9 +21,11 @@ export async function getMDCompFileContent(pages: string[], basePath: string) {
   pages.map(page => {
     const component = fileToComponentName(page);
     const path = fileToPath(page);
-    componentsToImport += `import ${component} from '${resolve(basePath, page)}';\n`;
+    componentsToImport += `import ${component}, { getHeaders as ${component}Headers, getTitle as ${component}Title} from '${resolve(basePath, page)}';\n`;
     navSource.push(`{
       comp: ${component},
+      getHeaders: ${component}Headers,
+      getTitle: ${component}Title,
       path: '${path}',
     }`);
   });
