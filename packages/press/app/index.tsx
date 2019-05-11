@@ -1,9 +1,10 @@
-import Layout from '@theme/Layout';
+import Layout from '@theme/components/Layout';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import MDComponents from './.temp/md-comps';
+import './theme/styles/highlight.css';
 
 export interface INav {
   headers: IHeader[];

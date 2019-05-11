@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import globby from 'globby';
 import { resolve } from 'path';
-import { promisify } from 'util';
+import { inspect, promisify } from 'util';
 import { getConfig } from './config';
 import { getMDCompFileContent } from './md-comps';
 
@@ -29,11 +29,11 @@ export default class PreProcessor {
     const mdCompFile = await getMDCompFileContent(this.options.pages, resolve(this.cwd, 'docs'));
     await this.writeToTemp('md-comps.ts', mdCompFile);
     // generate app/.temp/.after.config.js
-    const config = getConfig(this.cwd);
+    const config = getConfig(this.cwd, this.options.theme);
     config.build.alias = {
       '@theme': this.options.theme,
     };
-    await this.writeToTemp('.after.config.js', `module.exports=${JSON.stringify(config)}`);
+    await this.writeToTemp('.after.config.js', `module.exports=${inspect(config)}`);
   }
 
   public async resolveOptions() {

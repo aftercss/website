@@ -1,13 +1,10 @@
 import * as React from 'react';
-import { INav } from '../index';
+import { INav } from '../../index';
 import Nav from './Nav';
 
 export interface ILayoutProps {
   navData: INav[];
 }
-
-import './styles/highlight.css';
-
 export default class Layout extends React.Component<ILayoutProps> {
   public render() {
     return (

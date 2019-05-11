@@ -11,7 +11,7 @@
     "moduleResolution": "node",
     "jsx": "react",
     "resolveJsonModule": true,
-    "typeRoots": ["node_modules/@types", "./*.d.ts"]
+    "typeRoots": ["node_modules/@types", "./*.d.ts"],
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "**/*.spec.ts"]
