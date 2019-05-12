@@ -14,77 +14,69 @@ import {
 import { getOutputManagerPlugin, plugins } from '../plugins';
 import { getWebpackConfigEntry } from './entry';
 
-const RULES_MAP = new Map<string, webpack.RuleSetRule>([
-  [
-    '/\\.css$/',
-    {
-      test: /\.css$/,
-      use: getLoader4CSS(),
-    },
-  ],
-  [
-    '/\\.worker.ts$/',
-    {
-      test: /\.worker\.ts$/,
-      use: getLoader4Worker(),
-    },
-  ],
-  [
-    '/\\.md$/',
-    {
-      test: /\.md$/,
-      use: [
-        {
-          loader: getLoader4TypeScript(),
-          options: Object.assign(getOptions4TypeScript(), {
-            appendTsxSuffixTo: [/\.md$/],
-          }),
-        },
-        {
-          loader: getLoader4Markdown(),
-        },
-      ],
-    },
-  ],
-  [
-    '/\\.tsx?$/',
-    {
-      test: /\.tsx?$/,
-      use: [
-        {
-          loader: getLoader4TypeScript(),
-          options: getOptions4TypeScript(),
-        },
-      ],
-    },
-  ],
-  [
-    '/\\.(png|jp(e)g|gif)$/',
-
-    {
-      test: /\.(png|jp(e)g|gif)$/,
-      use: [
-        {
-          loader: getLoader4File(),
-        },
-      ],
-    },
-  ],
-]);
+const DEFAULT_RULES = [
+  {
+    test: /\.css$/,
+    use: getLoader4CSS(),
+  },
+  {
+    test: /\.worker\.ts$/,
+    use: getLoader4Worker(),
+  },
+  {
+    test: /\.md$/,
+    use: [
+      {
+        loader: getLoader4TypeScript(),
+        options: Object.assign(getOptions4TypeScript(), {
+          appendTsxSuffixTo: [/\.md$/],
+        }),
+      },
+      {
+        loader: getLoader4Markdown(),
+      },
+    ],
+  },
+  {
+    test: /\.tsx?$/,
+    use: [
+      {
+        loader: getLoader4TypeScript(),
+        options: getOptions4TypeScript(),
+      },
+    ],
+  },
+  {
+    test: /\.(png|jp(e)g|gif)$/,
+    use: [
+      {
+        loader: getLoader4File(),
+      },
+    ],
+  },
+];
 
 export function commonWebpackConfig(commonConfig: ICommonConfig, afterSitePlugins: AfterSitePlugin[]) {
   // 用户定义的rule覆盖默认rule
+  const ruleSet = new Set<string>();
+  const rules = commonConfig.module && commonConfig.module.rules ? commonConfig.module.rules : [];
   if (commonConfig.module && commonConfig.module.rules) {
     for (const rule of commonConfig.module.rules) {
       const regStr = rule.test.toString();
-      RULES_MAP.set(regStr, rule);
+      ruleSet.add(regStr);
+    }
+  }
+  for (const rule of DEFAULT_RULES) {
+    const regStr = rule.test.toString();
+    if (!ruleSet.has(regStr)) {
+      rules.push(rule);
     }
   }
 
   const config: webpack.Configuration = {
     entry: getWebpackConfigEntry(commonConfig),
     module: {
-      rules: [...RULES_MAP.values()],
+      rules,
     },
     output: {
       filename: '[name].js',
