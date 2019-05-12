@@ -8,7 +8,7 @@ const DEFAULT_LANGS = ['text'];
 loadLanguages(DEFAULT_LANGS);
 
 function wrap(code: string, lang: string) {
-  return `<pre className="language-${lang}"><code>${code}</code></pre>`;
+  return `<pre className="language-${lang}"><div className="language-type">${lang}</div><code className="language-${lang}">${code}</code></pre>`;
 }
 
 export default function highlight(str: string, lang: string) {

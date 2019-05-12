@@ -6,7 +6,7 @@ import Token = require('markdown-it/lib/token');
 export default (md: markdown) => {
   md.use(container, ...createContainer('tip', 'TIP'))
     .use(container, ...createContainer('warning', 'WARNING'))
-    .use(container, ...createContainer('danger', 'WARNING'));
+    .use(container, ...createContainer('danger', 'DANGER'));
 };
 
 function createContainer(klass: string, defaultTitle: string): Array<any> {

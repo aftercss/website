@@ -5,7 +5,7 @@ export interface INav {
   headers: IHeader[];
   title: string;
 }
-
+ 
 export interface IHeader {
   id: string;
   level: string;
